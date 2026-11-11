@@ -27,7 +27,7 @@ UPLOAD_DIR="$(mktemp --tmpdir --directory devcluster-backup-XXXXXXX)"
 trap 'rm --recursive --force "${UPLOAD_DIR}"' EXIT
 
 # Back up certs
-mkdir --parents "${UPLOAD_DIR}/certs"
+mkdir --parents "${UPLOAD_DIR}/certs/issuers"
 
 # Back up ssl certs for gateway and letsencrypt
 kubectl --namespace default get secrets digitalocean-dns letsencrypt letsencrypt-staging osoriano wavesmp -o yaml \
@@ -57,6 +57,11 @@ kubectl --namespace jettisonproj get secrets github-access github-key regcred s3
 kubectl --namespace wavesmp get secrets waves-server-rust-prod waves-client-web -o yaml \
   | grep -v -e 'creationTimestamp: ' -e 'resourceVersion: ' -e 'uid: ' \
   > "${UPLOAD_DIR}/certs/wavesmp-secrets.yaml"
+
+# Back up issuers
+kubectl --namespace default get issuers letsencrypt-staging letsencrypt-osoriano letsencrypt-wavesmp -o yaml \
+  | grep -v -e 'creationTimestamp: ' -e 'resourceVersion: ' -e 'uid: ' \
+  > "${UPLOAD_DIR}/certs/issuers/default-issuers.yaml"
 
 pushd "${UPLOAD_DIR}"
 tar --create --gzip --file "${CERTS_TAR}" certs
