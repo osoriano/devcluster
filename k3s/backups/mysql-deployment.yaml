@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: mysql
+  name: mysql-config
+data:
+  dev.cnf: |
+    [mysqld]
+    # Disable performance_schema - saves ~235MB in a dev cluster
+    performance_schema = OFF
+
+    # Buffer pool: only ~20MB of 128MB default is in use, 32MB is sufficient
+    innodb_buffer_pool_size = 32M
+
+    # Log buffer: reduce from 64MB default
+    innodb_log_buffer_size = 8M
+
+    # Reduce per-connection overhead (default 151, only ~5 used)
+    max_connections = 50
+
+    # Reduce open table cache (default 4000)
+    table_open_cache = 256
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mysql
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:8.4.0-oraclelinux9
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: waves
+        ports:
+        - containerPort: 3306
+          name: mysql
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 50m
+          limits:
+            memory: 256Mi
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        - name: mysql-config
+          mountPath: /etc/mysql/conf.d
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql
+      - name: mysql-config
+        configMap:
+          name: mysql-config
