@@ -1,0 +1,8 @@
+# Ignore downloaded binaries (e.g. Cilium CLI)
+/k3s/bin
+
+# Ignore cert backup dir
+/k3s/backups/certs
+
+# Ignore devcluster output (e.g. logins)
+/output
