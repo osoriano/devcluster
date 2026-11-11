@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-cmd-params-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cmd-params-cm
+data:
+  # Set to true since TLS is terminated at the gateway
+  server.insecure: "true"
+  # Enable Applications in any namespace
+  application.namespaces: "*"
+  # Disable sync with replace
+  server.sync.replace.allowed: "false"
