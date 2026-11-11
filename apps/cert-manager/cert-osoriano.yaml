@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: osoriano
+  namespace: default
+spec:
+  issuerRef:
+    name: letsencrypt-osoriano
+  dnsNames:
+  - "*.osoriano.com"
+  - osoriano.com
+  secretName: osoriano

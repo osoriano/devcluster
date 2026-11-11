@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wavesmp
+  namespace: default
+spec:
+  issuerRef:
+    name: letsencrypt-wavesmp
+  dnsNames:
+  - "*.wavesmusicplayer.com"
+  - wavesmusicplayer.com
+  secretName: wavesmp
