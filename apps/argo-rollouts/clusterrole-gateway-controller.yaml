@@ -1,0 +1,21 @@
+# See https://rollouts-plugin-trafficrouter-gatewayapi.readthedocs.io/en/latest/installation/
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: gateway-controller-role
+  namespace: argo-rollouts
+rules:
+  # Core API resources
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get"]
+
+  # Gateway API v1 resources
+  - apiGroups: ["gateway.networking.k8s.io"]
+    resources: ["httproutes", "grpcroutes"]
+    verbs: ["get", "list", "update", "patch"]
+
+  # Gateway API v1alpha2 resources
+  - apiGroups: ["gateway.networking.k8s.io"]
+    resources: ["tcproutes", "tlsroutes"]
+    verbs: ["get", "list", "update", "patch"]
