@@ -1,0 +1,35 @@
+#
+# PR flow for jettisonproj/deploy-steps
+#
+apiVersion: workflows.jettisonproj.io/v1alpha1
+kind: Flow
+metadata:
+  namespace: jettisonproj
+  name: deploy-steps-github-pr
+spec:
+  # activeDeadlineSeconds: 900 # Defaults to 900 (15m) for pr build
+  triggers:
+  - triggerSource: GitHubPullRequest
+    repoUrl: "https://github.com/jettisonproj/deploy-steps.git"
+    # pullRequestEvents: [] # Defaults to opened, reopened, synchronize
+  steps:
+  - stepName: deploy-step-pr-argocd
+    stepSource: DockerBuildTest
+    dockerContextDir: "argocd" # Defaults to "" (root)
+    # dockerfilePath: Dockerfile # Defaults to <dockerContextDir>/Dockerfile
+  - stepName: deploy-step-pr-create-pr
+    stepSource: DockerBuildTest
+    dockerContextDir: "create-pr" # Defaults to "" (root)
+    # dockerfilePath: Dockerfile # Defaults to <dockerContextDir>/Dockerfile
+  - stepName: deploy-step-pr-docker-build-diff-check
+    stepSource: DockerBuildTest
+    dockerContextDir: "docker-build-diff-check" # Defaults to "" (root)
+    # dockerfilePath: Dockerfile # Defaults to <dockerContextDir>/Dockerfile
+  - stepName: deploy-step-pr-docker-build
+    stepSource: DockerBuildTest
+    dockerContextDir: "docker-build" # Defaults to "" (root)
+    # dockerfilePath: Dockerfile # Defaults to <dockerContextDir>/Dockerfile
+  - stepName: deploy-step-pr-github-check
+    stepSource: DockerBuildTest
+    dockerContextDir: "github-check" # Defaults to "" (root)
+    # dockerfilePath: Dockerfile # Defaults to <dockerContextDir>/Dockerfile

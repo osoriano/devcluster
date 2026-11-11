@@ -1,0 +1,18 @@
+#
+# PR flow for jettisonproj/jettison-controller
+#
+apiVersion: workflows.jettisonproj.io/v1alpha1
+kind: Flow
+metadata:
+  namespace: jettisonproj
+  name: jettison-controller-github-pr
+spec:
+  # activeDeadlineSeconds: 900 # Defaults to 900 (15m) for pr build
+  triggers:
+  - triggerSource: GitHubPullRequest
+    repoUrl: "https://github.com/jettisonproj/jettison-controller.git"
+    # pullRequestEvents: [] # Defaults to opened, reopened, synchronize
+  steps:
+  - stepSource: DockerBuildTest
+    # dockerfilePath: Dockerfile # Defaults to Dockerfile
+    # dockerContextDir: "" # Defaults to "" (root)

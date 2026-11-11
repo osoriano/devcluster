@@ -1,0 +1,41 @@
+#
+# Push flow for jettisonproj/rollouts-demo
+#
+apiVersion: workflows.jettisonproj.io/v1alpha1
+kind: Flow
+metadata:
+  namespace: jettisonproj
+  name: rollouts-demo-github-push
+spec:
+  # activeDeadlineSeconds: 3600 # Defaults to 3600 (1h) for push build
+  triggers:
+  - triggerName: github-push
+    triggerSource: GitHubPush
+    repoUrl: "https://github.com/jettisonproj/rollouts-demo.git"
+    # baseRef: "main" # Defaults to main
+  steps:
+  - stepName: docker-build-test-publish
+    stepSource: DockerBuildTestPublish
+    # dockerfilePath: Dockerfile # Defaults to Dockerfile
+    # dockerContextDir: "" # Defaults to "" (root)
+  - stepName: deploy-to-dev
+    stepSource: ArgoCD
+    repoUrl: "https://github.com/jettisonproj/rollouts-demo-argo-configs.git"
+    repoPath: "dev"
+    # baseRef: "main" # Defaults to main
+    dependsOn:
+    - docker-build-test-publish
+  - stepName: deploy-to-staging
+    stepSource: ArgoCD
+    repoUrl: "https://github.com/jettisonproj/rollouts-demo-argo-configs.git"
+    repoPath: "staging"
+    # baseRef: "main" # Defaults to main
+    dependsOn:
+      - docker-build-test-publish
+  - stepName: deploy-to-prod
+    stepSource: ArgoCD
+    repoUrl: "https://github.com/jettisonproj/rollouts-demo-argo-configs.git"
+    repoPath: "prod"
+    # baseRef: "main" # Defaults to main
+    dependsOn:
+      - deploy-to-staging

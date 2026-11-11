@@ -1,0 +1,25 @@
+#
+# PR flow for jettisonproj/jettison-ui
+#
+apiVersion: workflows.jettisonproj.io/v1alpha1
+kind: Flow
+metadata:
+  namespace: jettisonproj
+  name: jettison-ui-github-pr
+spec:
+  # activeDeadlineSeconds: 900 # Defaults to 900 (15m) for pr build
+  triggers:
+  - triggerSource: GitHubPullRequest
+    repoUrl: "https://github.com/jettisonproj/jettison-ui.git"
+    # pullRequestEvents: [] # Defaults to opened, reopened, synchronize
+  steps:
+  - stepSource: DockerBuildTest
+    # dockerfilePath: Dockerfile # Defaults to Dockerfile
+    # dockerContextDir: "" # Defaults to "" (root)
+    artifacts:
+    - key: playwright-report.tar.gz
+      path: /playwright-report.tar.gz
+      optional: true
+    - key: test-results.tar.gz
+      path: /test-results.tar.gz
+      optional: true

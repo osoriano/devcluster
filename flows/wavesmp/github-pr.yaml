@@ -1,0 +1,34 @@
+#
+# PR flow for wavesmp/wavesmp
+#
+apiVersion: workflows.jettisonproj.io/v1alpha1
+kind: Flow
+metadata:
+  name: github-pr
+spec:
+  # activeDeadlineSeconds: 900 # Defaults to 900 (15m) for pr build
+  triggers:
+  - triggerSource: GitHubPullRequest
+    repoUrl: "https://github.com/wavesmp/wavesmp.git"
+    # pullRequestEvents: [] # Defaults to opened, reopened, synchronize
+  steps:
+  - stepName: client-docker-build-test
+    stepSource: DockerBuildTest
+    dockerContextDir: "client" # Defaults to "" (root)
+    volumeMounts:
+    - name: waves-client-web
+      mountPath: /repo/client/packages/waves-client-web/src/config
+    volumes:
+    - name: waves-client-web
+      secret:
+        secretName: waves-client-web
+  - stepName: server-docker-build-test
+    stepSource: DockerBuildTest
+    dockerContextDir: "server" # Defaults to "" (root)
+    volumeMounts:
+    - name: waves-server-rust-prod
+      mountPath: /repo/server/src/config
+    volumes:
+    - name: waves-server-rust-prod
+      secret:
+        secretName: waves-server-rust-prod

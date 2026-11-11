@@ -1,0 +1,49 @@
+#
+# Push flow for wavesmp/wavesmp
+#
+apiVersion: workflows.jettisonproj.io/v1alpha1
+kind: Flow
+metadata:
+  name: github-push
+spec:
+  # activeDeadlineSeconds: 3600 # Defaults to 3600 (1h) for push build
+  triggers:
+  - triggerName: github-push
+    triggerSource: GitHubPush
+    repoUrl: "https://github.com/wavesmp/wavesmp.git"
+    baseRef: "master" # Defaults to main
+  steps:
+  - stepName: client-docker-build-test-publish
+    stepSource: DockerBuildTestPublish
+    dockerContextDir: "client" # Defaults to "" (root)
+    volumeMounts:
+    - name: waves-client-web
+      mountPath: /repo/client/packages/waves-client-web/src/config
+    volumes:
+    - name: waves-client-web
+      secret:
+        secretName: waves-client-web
+  - stepName: server-docker-build-test-publish
+    stepSource: DockerBuildTestPublish
+    dockerContextDir: "server" # Defaults to "" (root)
+    volumeMounts:
+    - name: waves-server-rust-prod
+      mountPath: /repo/server/src/config
+    volumes:
+    - name: waves-server-rust-prod
+      secret:
+        secretName: waves-server-rust-prod
+  - stepName: client-deploy-to-prod
+    stepSource: ArgoCD
+    repoUrl: "https://github.com/wavesmp/wavesmp-argo-configs.git"
+    repoPath: "prod/client"
+    # baseRef: "master" # Defaults to main
+    dependsOn:
+      - client-docker-build-test-publish
+  - stepName: server-deploy-to-prod
+    stepSource: ArgoCD
+    repoUrl: "https://github.com/wavesmp/wavesmp-argo-configs.git"
+    repoPath: "prod/server"
+    # baseRef: "master" # Defaults to main
+    dependsOn:
+      - server-docker-build-test-publish

@@ -1,0 +1,34 @@
+#
+# Push flow for jettisonproj/jettison-ui
+#
+apiVersion: workflows.jettisonproj.io/v1alpha1
+kind: Flow
+metadata:
+  namespace: jettisonproj
+  name: jettison-ui-github-push
+spec:
+  # activeDeadlineSeconds: 3600 # Defaults to 3600 (1h) for push build
+  triggers:
+  - triggerName: github-push
+    triggerSource: GitHubPush
+    repoUrl: "https://github.com/jettisonproj/jettison-ui.git"
+    # baseRef: "main" # Defaults to main
+  steps:
+  - stepName: docker-build-test-publish
+    stepSource: DockerBuildTestPublish
+    # dockerfilePath: Dockerfile # Defaults to Dockerfile
+    # dockerContextDir: "" # Defaults to "" (root)
+    artifacts:
+    - key: playwright-report.tar.gz
+      path: /playwright-report.tar.gz
+      optional: true
+    - key: test-results.tar.gz
+      path: /test-results.tar.gz
+      optional: true
+  - stepName: deploy-to-prod
+    stepSource: ArgoCD
+    repoUrl: "https://github.com/jettisonproj/jettison-argo-configs.git"
+    repoPath: "prod/ui"
+    # baseRef: "master" # Defaults to main
+    dependsOn:
+    - docker-build-test-publish
