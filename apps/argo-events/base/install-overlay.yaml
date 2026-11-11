@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-manager
+  namespace: argo-events
+spec:
+  template:
+    spec:
+      containers:
+      - name: controller-manager
+        env:
+        - name: ARGO_EVENTS_IMAGE
+          value: osoriano/argo-events:493c412d42712d61266db1c294e2c011172b1268

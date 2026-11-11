@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  namespace: argo-events
+  name: https-argo-github
+spec:
+  parentRefs:
+  - name: default-gateway
+    namespace: default
+    sectionName: argo-github-osoriano-gw
+  hostnames:
+  - argo-github.osoriano.com
+  rules:
+  - backendRefs:
+    - name: github-eventsource-svc
+      port: 12000

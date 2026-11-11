@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: argo-events
+  name: controller-manager
+spec:
+  template:
+    spec:
+      containers:
+      - name: controller-manager
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: argo-events
+  name: events-webhook
+spec:
+  template:
+    spec:
+      containers:
+      - name: webhook
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
