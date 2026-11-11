@@ -1,0 +1,208 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  namespace: default
+  name: default-gateway
+spec:
+  gatewayClassName: cilium
+  listeners:
+  # There is some Cilium issue where the httproutes can't properly attach to http-gw
+  # So, use the http-*-gw below
+  # Could be related to:
+  # - https://github.com/cilium/cilium/issues/36750
+  - name: http-gw
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: http-osoriano-gw
+    protocol: HTTP
+    port: 80
+    hostname: "osoriano.com"
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: http-wavesmp-gw
+    protocol: HTTP
+    port: 80
+    hostname: "wavesmusicplayer.com"
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: wavesmp-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "wavesmusicplayer.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: wavesmp
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: www-wavesmp-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "www.wavesmusicplayer.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: wavesmp
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: www-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "www.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: argocd-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "argocd.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: argo-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "argo.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: argo-github-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "argo-github.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: rollouts-demo-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "rollouts-demo.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: rollouts-demo-staging-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "rollouts-demo-staging.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: rollouts-demo-dev-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "rollouts-demo-dev.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: alertmanager-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "alertmanager.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: grafana-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "grafana.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: prometheus-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "prometheus.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: headlamp-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "headlamp.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: jettison-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "jettison.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: appfoundry-osoriano-gw
+    protocol: HTTPS
+    port: 443
+    hostname: "backstage.osoriano.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: osoriano
+    allowedRoutes:
+      namespaces:
+        from: All
