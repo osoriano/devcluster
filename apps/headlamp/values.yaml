@@ -1,0 +1,18 @@
+config:
+  watchPlugins: true
+resources:
+  requests:
+    cpu: 10m
+    memory: 64Mi
+  limits:
+    memory: 256Mi
+pluginsManager:
+  enabled: true
+  configContent: |
+    plugins:
+      - name: cert-manager
+        source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_cert-manager
+        version: 0.1.1
+    installOptions:
+      parallel: true
+      maxConcurrent: 2
