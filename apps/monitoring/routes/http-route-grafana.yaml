@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  namespace: monitoring
+  name: grafana
+spec:
+  parentRefs:
+  - name: default-gateway
+    namespace: default
+    sectionName: http-osoriano-gw
+  hostnames:
+  - grafana.osoriano.com
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
