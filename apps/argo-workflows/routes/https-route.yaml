@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  namespace: argo
+  name: https-argo
+spec:
+  parentRefs:
+  - name: default-gateway
+    namespace: default
+    sectionName: argo-osoriano-gw
+  hostnames:
+  - argo.osoriano.com
+  rules:
+  - backendRefs:
+    - name: argo-server
+      port: 2746

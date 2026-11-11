@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-server
+  namespace: argo
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - server
+        - "--secure=false"
+        name: argo-server
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 2746
+            scheme: HTTP
