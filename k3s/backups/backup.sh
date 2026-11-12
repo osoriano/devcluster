@@ -33,10 +33,6 @@ mkdir --parents "${UPLOAD_DIR}/certs/issuers"
 kubectl --namespace default get secrets digitalocean-dns letsencrypt letsencrypt-staging osoriano wavesmp -o yaml \
   | grep -v -e 'creationTimestamp: ' -e 'resourceVersion: ' -e 'uid: ' \
   > "${UPLOAD_DIR}/certs/default-secrets.yaml"
-# Not sure if needed, but back up cilium-secrets
-kubectl --namespace cilium-secrets get secrets default-osoriano default-wavesmp -o yaml \
-  | grep -v -e 'creationTimestamp: ' -e 'resourceVersion: ' -e 'uid: ' \
-  > "${UPLOAD_DIR}/certs/cilium-secrets-secrets.yaml"
 # Back up secrets related to argo-events (e.g. github webhook configuration)
 kubectl --namespace argo-events get secrets github-access -o yaml \
   | grep -v -e 'creationTimestamp: ' -e 'resourceVersion: ' -e 'uid: ' \
