@@ -1,6 +1,5 @@
 kubeProxyReplacement: "true"
 
-# These should be in sync with common.sh
 k8sServiceHost: "localhost"
 k8sServicePort: "6443"
 

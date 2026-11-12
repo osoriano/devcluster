@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Scale the jettison-prod-controller rollout
+# Scale the jettison-controller-manager rollout
 #
 set -o errexit
 set -o nounset

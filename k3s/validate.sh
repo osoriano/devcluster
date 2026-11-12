@@ -28,7 +28,7 @@ if [[ ! -f bin/cilium ]]; then
     https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-amd64.tar.gz{,.sha256sum}
 
   sha256sum --check cilium-linux-amd64.tar.gz.sha256sum
-  sudo tar xzvf cilium-linux-amd64.tar.gz
+  tar xzvf cilium-linux-amd64.tar.gz
   rm cilium-linux-amd64.tar.gz{,.sha256sum}
 
   popd

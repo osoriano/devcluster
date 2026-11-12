@@ -13,6 +13,7 @@ Create a Kubernetes development cluster using k3s
 - [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) cloned into ~/gh/prometheus-operator/kube-prometheus
 - [osoriano/site](https://github.com/osoriano/site) cloned into ~/gh/osoriano/site
 - Tools: `jq`, `yq`, `htpasswd`
+- `aws` - CLI for accessing backups on S3
 
 # Instructions
 
