@@ -7,7 +7,7 @@ spec:
   parentRefs:
   - name: default-gateway
     namespace: default
-    sectionName: http-osoriano-gw
+    sectionName: http-gw
   hostnames:
   - argo.osoriano.com
   rules:
