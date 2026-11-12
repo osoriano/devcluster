@@ -10,7 +10,9 @@ Create a Kubernetes development cluster using k3s
 - `helm repo add nats https://nats-io.github.io/k8s/helm/charts/`
 - `helm repo add headlamp https://kubernetes-sigs.github.io/headlamp/`
 - `helm repo update`
-- [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus)
+- [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) cloned into ~/gh/prometheus-operator/kube-prometheus
+- [osoriano/site](https://github.com/osoriano/site) cloned into ~/gh/osoriano/site
+- Tools: `jq`, `yq`, `htpasswd`
 
 # Instructions
 
