@@ -25,11 +25,6 @@ GATEWAY_CRD_VERSION=v1.6.3
 
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
-# These should be in sync with cilium-values.yaml
-# todo may not be needed
-API_SERVER_IP=localhost
-API_SERVER_PORT=6443
-
 req() {
   curl \
     --silent \
