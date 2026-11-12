@@ -94,7 +94,7 @@ install-argo-workflows() {
   echo "Bearer ${ARGO_WORKFLOWS_TOKEN}" > "${OUTPUT_DIR}/argo.txt"
 }
 
-# Dependency for argo-evnets
+# Dependency for argo-events
 install-nats-jetstream() {
   echo "Install NATS Jetstream"
   kubectl create namespace nats --dry-run=client -o yaml | kubectl apply --server-side -f -

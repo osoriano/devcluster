@@ -12,7 +12,7 @@ git rebase origin/main
 # Create the namespace and CRDs
 kubectl apply --server-side -f manifests/setup
 
-# Wait for them to be availble before creating the remaining resources
+# Wait for them to be available before creating the remaining resources
 while ! kubectl get servicemonitors --all-namespaces; do
   echo "$(date): Waiting for servicemonitors to come up"
   sleep 1
