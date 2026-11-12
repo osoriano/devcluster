@@ -5,7 +5,6 @@ namespace: argo-events
 resources:
 - https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
 - https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install-validating-webhook.yaml
-- eventbus.yaml
 
 # Use newer image than the fix here:
 # https://github.com/argoproj/argo-events/issues/2938

@@ -113,6 +113,7 @@ install-argo-events() {
   kubectl create namespace argo-events --dry-run=client -o yaml | kubectl apply --server-side -f -
   kubectl apply --server-side -n argo-events -k ./apps/argo-events/base
   kubectl apply --server-side -n argo-events -f ./apps/argo-events/routes
+  kubectl apply --server-side -n argo-events -f ./apps/argo-events/base/eventbus.yaml
 }
 
 install-argo-rollouts() {
