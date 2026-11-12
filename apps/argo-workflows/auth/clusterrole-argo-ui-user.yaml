@@ -30,7 +30,6 @@ rules:
       - workflowtemplates
       - clusterworkflowtemplates
       - cronworkflows
-      - cronworkflows
       - workflowtaskresults
     verbs:
       - create
