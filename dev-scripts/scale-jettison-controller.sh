@@ -8,7 +8,7 @@ set -o pipefail
 
 
 ROLLOUT_NAMESPACE=jettisonproj
-ROLLOUT_NAME=jettison-prod-controller
+ROLLOUT_NAME=jettison-controller-manager
 NUM_REPLICAS=1
 
 kubectl \
