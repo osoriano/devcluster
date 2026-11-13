@@ -31,3 +31,7 @@ kubectl -n monitoring patch prometheus k8s --type merge \
 kubectl -n monitoring patch alertmanager main --type merge \
   -p '{"spec":{"replicas":1}}'
 kubectl -n monitoring scale deployment prometheus-adapter --replicas=1
+
+# Allow writes to fs to enable auto plugin updates and installs
+kubectl -n monitoring patch deployment grafana --type strategic \
+  -p '{"spec":{"template":{"spec":{"containers":[{"name":"grafana","securityContext":{"readOnlyRootFilesystem":null}}]}}}}'
