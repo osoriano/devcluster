@@ -8,6 +8,8 @@ INSTALL_K3S_EXEC='--flannel-backend=none'
 INSTALL_K3S_EXEC+=' --disable-network-policy'
 INSTALL_K3S_EXEC+=' --disable-kube-proxy'
 INSTALL_K3S_EXEC+=' --disable=traefik'
+INSTALL_K3S_EXEC+=' --disable=servicelb'
+INSTALL_K3S_EXEC+=' --disable=metrics-server'
 export INSTALL_K3S_EXEC
 
 # For Cilium chart releases, see:
