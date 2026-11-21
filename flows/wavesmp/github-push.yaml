@@ -45,5 +45,6 @@ spec:
     repoUrl: "https://github.com/wavesmp/wavesmp-argo-configs.git"
     repoPath: "prod/server"
     # baseRef: "master" # Defaults to main
+    # pauseReason: "osoriano development"
     dependsOn:
       - server-docker-build-test-publish
